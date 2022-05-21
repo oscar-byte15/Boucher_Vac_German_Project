@@ -1,0 +1,83 @@
+
+<body  style='width: 100%; height: 100%;display: flex;justify-content: center; align-items: center;'>
+
+<div style="display: flex; flex-wrap: wrap; gap:20px" class="content">
+
+  <div>
+    <mat-card style="max-width: 500px; ">
+      <img alt="image of {{currentUser.name}}" mat-card-image src="{{currentUser.image}}">
+    </mat-card>
+  </div>
+
+  <div>
+
+
+    <mat-card>
+
+      <div style="display: flex; flex-wrap: wrap; gap:20px; width: 430px">
+
+        <mat-form-field appearance="standard">
+          <mat-label>email</mat-label>
+          <input readonly matInput [value]="currentUser.email">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>password</mat-label>
+          <input readonly matInput [value]="currentUser.password">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>type</mat-label>
+          <input readonly matInput [value]="currentUser.type">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>city</mat-label>
+          <input readonly matInput [value]="currentUser.city">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>district</mat-label>
+          <input readonly matInput [value]="currentUser.district">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>dni</mat-label>
+          <input readonly matInput [value]="currentUser.dni">
+        </mat-form-field>
+
+
+        <mat-form-field  appearance="standard">
+          <mat-label>phone</mat-label>
+          <input readonly matInput [value]="currentUser.phone">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>name</mat-label>
+          <input readonly matInput [value]="currentUser.name">
+        </mat-form-field>
+
+
+        <mat-form-field appearance="standard">
+          <mat-label>lastname</mat-label>
+          <input readonly matInput [value]="currentUser.lastname">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>user</mat-label>
+          <input readonly matInput [value]="currentUser.user">
+        </mat-form-field>
+
+        <mat-action-row style="justify-content: center" *ngIf="this.userService.currentUser===this.storageService.getCurrentUser().id">
+          <button class="btn" style="background-color: #e80a3d; color: white" (click)="updateDialog()">EDIT</button>
+        </mat-action-row>
+
+      </div>
+
+
+    </mat-card>
+  </div>
+
+</div>
+
+</body>

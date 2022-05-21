@@ -1,0 +1,111 @@
+<div class="aligner">
+    <mat-card class="aligner-center-item">
+        <mat-card-title>
+            Signup Form
+        </mat-card-title>
+
+        <mat-card-content class="signup-board">
+            <form id="signup-form" #lForm="ngForm" [formGroup]="signupForm" (ngSubmit)="onSubmit()" novalidate>
+
+                <mat-form-field class="flexbox" appearance="fill">
+                    <mat-label>Name</mat-label>
+                    <input matInput type="text" formControlName="name" placeholder="Name"/>
+                    <mat-error class="red" *ngIf="submitted && signupForm.controls.name.hasError('required')">
+                        Field is mandatory
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="flexbox" appearance="fill">
+                    <mat-label>Lastname</mat-label>
+                    <input matInput type="text" formControlName="lastname" placeholder="Lastname"/>
+                    <mat-error class="red" *ngIf="submitted && signupForm.controls.lastname.hasError('required')">
+                        Field is mandatory
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="flexbox" appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input matInput  type="text" formControlName="email" placeholder="Email"/>
+                    <mat-error class="red" *ngIf="submitted && signupForm.controls.email.hasError('required')">
+                        Field is mandatory
+                    </mat-error>
+                    <mat-error class="red" *ngIf="submitted && signupForm.controls.email.hasError('email')">
+                        Not correct email
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="flexbox" appearance="fill">
+                    <mat-label>Password</mat-label>
+                    <input matInput type="password" formControlName="password" placeholder="Password"/>
+                    <mat-error class="red" *ngIf="submitted && signupForm.controls.password.hasError('required')">
+                        Field is mandatory
+                    </mat-error>
+                    <mat-hint>Min length is 5</mat-hint>
+                    <mat-error class="red" *ngIf="submitted && signupForm.controls.password.hasError('minlength')">
+                        Password must have length of 5
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="flexbox" appearance="fill">
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="type" [errorStateMatcher] = "matcher" #typeUser>
+                      <mat-option value="cliente"> cliente </mat-option>
+                      <mat-option value="empresa"> empresa </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="submitted && signupForm.controls.type.hasError('required')">
+                      Field is mandatory
+                    </mat-error>
+                  </mat-form-field>
+
+              <mat-form-field class="flexbox" appearance="fill">
+                <mat-label>City</mat-label>
+                <input matInput type="text" formControlName="city" placeholder="City"/>
+                <mat-error class="red" *ngIf="submitted && signupForm.controls.city.hasError('required')">
+                  Not a CITY
+                </mat-error>
+              </mat-form-field>
+
+                <mat-form-field class="flexbox" appearance="fill">
+                    <mat-label>District</mat-label>
+                    <input matInput type="text" formControlName="district" placeholder="District"/>
+                    <mat-error class="red" *ngIf="submitted && signupForm.controls.district.hasError('required')">
+                        Not a DISTRICT
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="flexbox" appearance="fill">
+                    <mat-label>DNI</mat-label>
+                    <input matInput type="text" formControlName="dni" placeholder="DNI"/>
+                    <mat-error class="red" *ngIf="submitted && signupForm.controls.dni.hasError('pattern')">
+                        Not a DNI
+                    </mat-error>
+                </mat-form-field>
+
+              <mat-form-field class="flexbox" appearance="fill">
+                <mat-label>Image</mat-label>
+                <input matInput type="text" formControlName="image" placeholder="Image"/>
+                <mat-error class="red" *ngIf="submitted && signupForm.controls.image.hasError('required')">
+                  Not a IMAGE
+                </mat-error>
+              </mat-form-field>
+
+                <mat-form-field class="flexbox" appearance="fill">
+                    <mat-label>Phone</mat-label>
+                    <input matInput type="text" formControlName="phone" placeholder="Phone"/>
+                    <mat-error class="red" *ngIf="submitted && signupForm.controls.dni.hasError('pattern')">
+                        Not a peruvian phone number
+                    </mat-error>
+                </mat-form-field>
+
+
+                <mat-card-actions>
+                    <button mat-raised-button type="submit" (click)="getTypeUer(typeUser.value)">Sign In</button>
+                </mat-card-actions>
+
+
+            </form>
+
+        </mat-card-content>
+
+    </mat-card>
+</div>

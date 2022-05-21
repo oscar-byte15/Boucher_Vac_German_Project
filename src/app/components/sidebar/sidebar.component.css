@@ -1,0 +1,24 @@
+mat-toolbar {
+  background: #e80a3d;
+  color: white;
+}
+mat-sidenav {
+  margin: 16px;
+  width: 250px;
+  border-right: none;
+  background: #e80a3d;
+  color: white;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+}
+
+mat-sidenav-container {
+  height: calc(100vh - 65px);
+}
+.avatar {
+  margin-top: 16px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}

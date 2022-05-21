@@ -1,0 +1,57 @@
+<div >
+  <h5 >Details of User Profile Form</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="onNoClick()"></button>
+</div>
+
+<div>
+
+  <form id="publish-form" [formGroup]="UserProfileForm" novalidate>
+
+    <mat-form-field class="flexbox" appearance="fill">
+      <mat-label>Enter Email</mat-label>
+      <mat-hint>Mandatory</mat-hint>
+      <input matInput type="text" formControlName="Email" placeholder="Enter Message"/>
+    </mat-form-field>
+
+
+    <mat-form-field class="flexbox" appearance="fill">
+      <mat-label>Enter City</mat-label>
+      <mat-hint>Mandatory</mat-hint>
+      <input matInput type="text" formControlName="City" placeholder="Enter Message"/>
+    </mat-form-field>
+
+    <mat-form-field class="flexbox" appearance="fill">
+      <mat-label>Enter District</mat-label>
+      <mat-hint>Mandatory</mat-hint>
+      <input matInput type="text" formControlName="District" placeholder="Enter Message"/>
+    </mat-form-field>
+
+    <mat-form-field class="flexbox" appearance="fill">
+      <mat-label>Enter DNI</mat-label>
+      <mat-hint>Mandatory</mat-hint>
+      <input matInput type="text" formControlName="Dni" placeholder="Enter Message"/>
+    </mat-form-field>
+
+    <mat-form-field class="flexbox" appearance="fill">
+      <mat-label>Enter Phone</mat-label>
+      <mat-hint>Mandatory</mat-hint>
+      <input matInput type="text" formControlName="Phone" placeholder="Enter Message"/>
+    </mat-form-field>
+
+    <mat-form-field class="flexbox" appearance="fill">
+      <mat-label>Enter Name</mat-label>
+      <mat-hint>Mandatory</mat-hint>
+      <input matInput type="text" formControlName="Name" placeholder="Enter Message"/>
+    </mat-form-field>
+
+    <mat-form-field class="flexbox" appearance="fill">
+      <mat-label>Enter LastName</mat-label>
+      <mat-hint>Mandatory</mat-hint>
+      <input matInput type="text" formControlName="LastName" placeholder="Enter Message"/>
+    </mat-form-field>
+
+  </form>
+  <mat-card-actions class="modal-footer">
+    <button mat-raised-button type="button" class="btn btn-danger" (click)="updatePublication()" >Update</button>
+  </mat-card-actions>
+</div>
