@@ -1,0 +1,48 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id" style="color:black">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+  <ng-container matColumnDef="numero" style="color:black">
+    <th mat-header-cell *matHeaderCellDef> numero </th>
+    <td mat-cell *matCellDef="let element"> {{element.numero}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="saldoInicial">
+    <th mat-header-cell *matHeaderCellDef> saldoInicial </th>
+    <td mat-cell *matCellDef="let element"> {{element.saldoInicial}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="interes">
+    <th mat-header-cell *matHeaderCellDef> interes </th>
+    <td mat-cell *matCellDef="let element"> {{element.interes}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="cuota">
+    <th mat-header-cell *matHeaderCellDef> cuota </th>
+    <td mat-cell *matCellDef="let element"> {{element.cuota}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="amortizacion">
+    <th mat-header-cell *matHeaderCellDef> amortizacion </th>
+    <td mat-cell *matCellDef="let element"> {{element.amortizacion}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="saldoFinal">
+    <th mat-header-cell *matHeaderCellDef> saldoFinal </th>
+    <td mat-cell *matCellDef="let element"> {{element.saldoFinal}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="userId">
+    <th mat-header-cell *matHeaderCellDef> User ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+<mat-card-actions>
+  <mat-button-toggle (click)="resetear()" style="margin-left:40%; background-color: #e80a3d; color:white; font-family: 'Arial Black',serif"> Resetear</mat-button-toggle>
+</mat-card-actions>

@@ -1,0 +1,37 @@
+<mat-toolbar>
+  <button mat-icon-button  (click)="sidenav.toggle()">
+    <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
+    <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+  </button>
+  BONO VAC ALEMÁN
+</mat-toolbar>
+
+<mat-sidenav-container>
+
+  <mat-sidenav #sidenav="matSidenav" >
+    <img alt ="image of user" class="avatar mat-elevation-z8" src="{{userImage}}">
+    <h4 class="name">Hi {{userName}}!!</h4>
+    <mat-divider></mat-divider>
+
+    <button style="color:white" mat-button class="mat-menu-item" (click)=" seeData()">
+      <mat-icon style="color:white">home</mat-icon>
+     <span>HOME</span>
+    </button>
+    <button style="color:white" mat-button class="mat-menu-item" (click)="seeMyUserProfile()">
+      <mat-icon style="color:white">account_circle</mat-icon>
+      <span>USER PROFILE</span>
+    </button>
+
+
+    <button style="color:white" mat-button class="mat-menu-item"  (click)="closeSession()">
+      <mat-icon style="color:white" ><span class="material-icons">arrow_circle_right</span></mat-icon>
+      <span>LOG OUT</span>
+    </button>
+  </mat-sidenav>
+
+
+<mat-sidenav-content>
+<router-outlet *ngIf="getRouter().url !== '/login' || getRouter().url !== '/signup'"></router-outlet>
+</mat-sidenav-content>
+
+</mat-sidenav-container>

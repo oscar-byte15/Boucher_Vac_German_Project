@@ -1,0 +1,11 @@
+.signup-board{
+    width: 100%; 
+    margin-bottom: 10px;
+}
+.red{
+    color: red;
+}
+.flexbox{
+    display: flex; 
+    flex-direction: row;
+}

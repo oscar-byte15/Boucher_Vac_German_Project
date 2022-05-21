@@ -1,0 +1,85 @@
+<div  >
+  <button type="button" class="btn-close" aria-label="Close" (click)="onNoClick()"></button>
+</div>
+
+<body  style='width: 100%; height: 100%;display: flex;justify-content: center; align-items: center;background-color: #e80a3d ;'>
+
+
+
+<div style="display: flex; flex-wrap: wrap; gap:20px" class="content">
+
+  <div>
+    <mat-card style="max-width: 500px; ">
+      <img alt="image of {{user_publication.name}}" mat-card-image src="{{user_publication.image}}">
+    </mat-card>
+  </div>
+
+  <div>
+
+
+    <mat-card>
+
+      <div style="display: flex; flex-wrap: wrap; gap:20px; width: 430px">
+
+        <mat-form-field appearance="standard">
+          <mat-label>email</mat-label>
+          <input readonly matInput [value]="user_publication.email">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>password</mat-label>
+          <input readonly matInput [value]="user_publication.password">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>type</mat-label>
+          <input readonly matInput [value]="user_publication.type">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>city</mat-label>
+          <input readonly matInput [value]="user_publication.city">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>district</mat-label>
+          <input readonly matInput [value]="user_publication.district">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>dni</mat-label>
+          <input readonly matInput [value]="user_publication.dni">
+        </mat-form-field>
+
+
+        <mat-form-field  appearance="standard">
+          <mat-label>phone</mat-label>
+          <input readonly matInput [value]="user_publication.phone">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>name</mat-label>
+          <input readonly matInput [value]="user_publication.name">
+        </mat-form-field>
+
+
+        <mat-form-field appearance="standard">
+          <mat-label>lastname</mat-label>
+          <input readonly matInput [value]="user_publication.lastname">
+        </mat-form-field>
+
+        <mat-form-field appearance="standard">
+          <mat-label>user</mat-label>
+          <input readonly matInput [value]="user_publication.user">
+        </mat-form-field>
+
+
+      </div>
+
+
+    </mat-card>
+  </div>
+
+</div>
+
+</body>
