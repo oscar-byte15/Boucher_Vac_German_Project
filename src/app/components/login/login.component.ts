@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-    })
+    });
   }
   onSubmit(): void {
     this.submitted = true;
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
       this.authenticationService.login(email, password).subscribe(
         data => this.correctLogin(data)
-      )
+      );
     }
   }
   private correctLogin(data: Session){

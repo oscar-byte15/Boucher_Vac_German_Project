@@ -6,5 +6,6 @@ export class ResultadosFinalesModel{
   public amortizacion:number;
   public saldoFinal:number;
   public userId:number;
+  public fechaEmision:string;
   public id:number;
 }

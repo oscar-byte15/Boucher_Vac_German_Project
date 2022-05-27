@@ -22,7 +22,7 @@ import { UserService } from './services/user.service';
 import { AuthGuard } from './guards/AuthGuard';
 // interceptor
 import { AuthInterceptor } from './interceptor/AuthInterceptor';
-import {PublicationService} from './services/publication.service';
+
 
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -32,6 +32,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile/use
 import { UpdateUserDialogComponent } from './components/user-profile/update-dialog/update-user-dialog/update-user-dialog.component';
 import { UserProfilePublicationComponent } from './components/main/UserProfileByPublication/user-profile-publication/user-profile-publication.component';
 import { CronogramaComponent } from './components/cronograma/cronograma/cronograma.component';
+import {ResultadoFinalService} from './services/resultado-final.service';
 
 
 
@@ -61,7 +62,7 @@ import { CronogramaComponent } from './components/cronograma/cronograma/cronogra
     NgbModule
   ],
   providers: [
-    AuthService, StorageService, AuthGuard, UserService, PublicationService,
+    AuthService, StorageService, AuthGuard, UserService, ResultadoFinalService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

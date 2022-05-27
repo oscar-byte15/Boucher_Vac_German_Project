@@ -1,11 +1,10 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {BookingService} from '../../../services/booking.service';
+
 import {StorageService} from '../../../services/storage.service';
-import {BookingModel} from '../../../models/booking.model';
-import {B} from '@angular/cdk/keycodes';
+
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+
 import {ResultadosFinalesModel} from '../../../models/resultadosFinales';
 import {ResultadoFinalService} from '../../../services/resultado-final.service';
 
@@ -22,7 +21,7 @@ export class CronogramaComponent implements OnInit {
    public dataSource: MatTableDataSource<ResultadosFinalesModel>;
 
 
-  displayedColumns: string[] = ['id', 'numero', 'saldoInicial', 'interes', 'cuota', 'amortizacion', 'saldoFinal','userId'];
+  displayedColumns: string[] = ['id', 'numero', 'saldoInicial', 'interes', 'cuota', 'amortizacion', 'saldoFinal', 'fechaEmision','userId'];
   @ViewChild(MatSort) sort: MatSort;
   constructor( public resultadoService: ResultadoFinalService, private storageService: StorageService) { }
   ngOnInit(): void {
@@ -30,9 +29,8 @@ export class CronogramaComponent implements OnInit {
     this.dataSource = new MatTableDataSource<any>();
   }
   getData(): void{
+    // tslint:disable-next-line:radix
   this.resultadoService.getResultadosByUserId(this.storageService.getCurrentUser().id).subscribe((res) => {
-    console.log('El arreglo de informacion del flujo de datos es : ', res);
-    // recuerda revisar el service nombreModel[]
     this.dataSource.data = res;
     });
   }
@@ -41,9 +39,18 @@ export class CronogramaComponent implements OnInit {
 
   }
 
-  resetear():void {
-    this.resultadoService.deleteResultadosByUserId(this.storageService.getCurrentUser().id).subscribe((res)=>{
-      console.log("La información: ",res, " ha sido eliminada.");
+  resetear(): void {
+    this.resultadoService.getResultadosByUserId(this.storageService.getCurrentUser().id).subscribe((res) => {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < res.length; ++i){
+        // tslint:disable-next-line:no-shadowed-variable
+        this.resultadoService.deleteResultadosById( res[i].id).subscribe((res) => {
+          console.log('La información: ', res, ' ha sido eliminada.');
+        }, (error => {
+          console.log('el error es: ', error);
+        }));
+      }
     });
+    // location.reload();
   }
 }

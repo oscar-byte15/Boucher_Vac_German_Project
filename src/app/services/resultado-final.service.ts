@@ -19,8 +19,8 @@ export class ResultadoFinalService {
   postResultados(data: any): Observable<ResultadosFinalesModel>{
     return this.http.post<ResultadosFinalesModel>(this.basePath + this.apiEndPoint, data);
   }
-  deleteResultadosByUserId(userId: number): Observable<ResultadosFinalesModel[]>{
-    return this.http.delete<ResultadosFinalesModel[]>(this.basePath + this.apiEndPoint + '?userId='+userId.toString());
+  deleteResultadosById(id: number): Observable<ResultadosFinalesModel>{
+    return this.http.delete<ResultadosFinalesModel>(this.basePath + this.apiEndPoint + '/' + id);
   }
 
 }
