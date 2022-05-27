@@ -34,6 +34,11 @@
     <td mat-cell *matCellDef="let element"> {{element.saldoFinal}} </td>
   </ng-container>
 
+  <ng-container matColumnDef="fechaEmision">
+    <th mat-header-cell *matHeaderCellDef> fechaEmision </th>
+    <td mat-cell *matCellDef="let element"> {{element.fechaEmision}} </td>
+  </ng-container>
+
   <ng-container matColumnDef="userId">
     <th mat-header-cell *matHeaderCellDef> User ID </th>
     <td mat-cell *matCellDef="let element"> {{element.userId}} </td>

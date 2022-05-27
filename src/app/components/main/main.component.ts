@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PublicationService} from '../../services/publication.service';
+
 import {StorageService} from '../../services/storage.service';
 import {UserProfilePublicationComponent} from './UserProfileByPublication/user-profile-publication/user-profile-publication.component';
 import {MatDialog} from '@angular/material/dialog';
@@ -11,6 +11,7 @@ import {CronogramaComponent} from '../cronograma/cronograma/cronograma.component
 
 import {ResultadoFinalService} from '../../services/resultado-final.service';
 import {ResultadosFinalesModel} from '../../models/resultadosFinales';
+
 
 @Component({
   selector: 'app-main',
@@ -25,7 +26,7 @@ export class MainComponent implements OnInit {
   public cronograma_model: CronogramaModel = new CronogramaModel();
   public resultadosFinalesModel: ResultadosFinalesModel = new ResultadosFinalesModel();
   public resultadosFinalesModel2: ResultadosFinalesModel = new ResultadosFinalesModel();
-  constructor(private apiPublicationService: PublicationService, private storageService: StorageService,
+  constructor( private storageService: StorageService,
               private dialog: MatDialog, private formBuilder: FormBuilder, public resultadoService: ResultadoFinalService) {
   }
 
@@ -91,16 +92,17 @@ export class MainComponent implements OnInit {
     this.resultadosFinalesModel2.cuota = cuota;
     this.resultadosFinalesModel2.amortizacion = amortizacion;
     this.resultadosFinalesModel2.saldoFinal = saldoFinal;
+    this.resultadosFinalesModel2.fechaEmision = this.cronograma_model.fecha_emision;
     this.resultadosFinalesModel2.userId = this.currentUser;
-    // invocar al servicio de post recuerdaaaaaaaaaaa
 
-    this.resultadoService.postResultados(this.resultadosFinalesModel2).subscribe((res) =>{
+    if (this.resultadosFinalesModel2.saldoInicial > 0) {
+    this.resultadoService.postResultados(this.resultadosFinalesModel2).subscribe((res) => {
       console.log('La informacion en el servicio de post resultados es: ', res);
     });
-
+  }
     for ( counter = 2; counter <= n_cuotas; counter++){
 
-      if (counter >= 2){
+      if (counter >= 2) {
         saldoInicial = saldoFinal;
         interes = TEP * saldoInicial;
         amortizacion = saldoInicial / (n_cuotas - counter + 1);
@@ -113,12 +115,32 @@ export class MainComponent implements OnInit {
         this.resultadosFinalesModel.cuota = cuota;
         this.resultadosFinalesModel.amortizacion = amortizacion;
         this.resultadosFinalesModel.saldoFinal = saldoFinal;
-        this.resultadosFinalesModel.userId = this.currentUser;
-        // invocar al servicio de post recuerdaaaaaaaaaaa
 
-        this.resultadoService.postResultados(this.resultadosFinalesModel).subscribe((res) =>{
-          console.log("La informacion en el servicio de post resultados es: ", res);
-        });
+        let fecha_inicio = this.cronograma_model.fecha_emision.valueOf();
+        let dias = (this.cronograma_model.dias * counter).valueOf();
+        const dateparts = fecha_inicio.split('-').map(d => parseInt(d));
+        if (dateparts.length !== 3 || !dateparts.every(d => !isNaN(d))){
+          console.log('La fecha no tiene un formato correcto');
+        }
+        const fechaDate = new Date(dateparts[2], dateparts[1] - 1, dateparts[0]);
+        console.log('La fecha es: ', fechaDate);
+
+        fechaDate.setDate(fechaDate.getDate() + parseInt(String(dias)));
+
+        /*
+        const formatDate = (current_datetime)=>{
+          let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds();
+          return formatted_date;
+        };
+              let date_oficial = formatDate(fechaDate);
+*/
+        this.resultadosFinalesModel.fechaEmision = fechaDate.toString();
+        this.resultadosFinalesModel.userId = this.currentUser;
+        if (this.resultadosFinalesModel.saldoInicial > 0) {
+          this.resultadoService.postResultados(this.resultadosFinalesModel).subscribe((res) => {
+            console.log('La informacion en el servicio de post resultados es: ', res);
+          });
+        }
       }
     }
 
