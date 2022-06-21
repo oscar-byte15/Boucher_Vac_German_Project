@@ -1,12 +1,14 @@
 export class CronogramaModel {
   public id: number;
-  public bono: number;
+  public valorNominal: number;
+  public valorComercial: number;
   public moneda: string;
-  public dias: number;
-  public anios: number;
-  public tipo_tasa: string;
+  public frecuenciaDias: number;
+  public inflacion:number;
+  public plazo: number;
+  public tipo_tasa_cupon: string;
   public capitalizacion: number;
-  public tasa_interes: number;
+  public tasa_interes_cupon: number;
   public fecha_emision:string;
-  public cok:number;
+  public flujo:number;
 }
