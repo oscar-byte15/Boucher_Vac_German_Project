@@ -4,24 +4,29 @@
     <th mat-header-cell *matHeaderCellDef> ID </th>
     <td mat-cell *matCellDef="let element"> {{element.id}} </td>
   </ng-container>
-  <ng-container matColumnDef="numero" style="color:black">
-    <th mat-header-cell *matHeaderCellDef> numero </th>
-    <td mat-cell *matCellDef="let element"> {{element.numero}} </td>
+  <ng-container matColumnDef="valorNominal" style="color:black">
+    <th mat-header-cell *matHeaderCellDef> valor nominal </th>
+    <td mat-cell *matCellDef="let element"> {{element.valorNominal}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="saldoInicial">
-    <th mat-header-cell *matHeaderCellDef> saldoInicial </th>
-    <td mat-cell *matCellDef="let element"> {{element.saldoInicial}} </td>
+  <ng-container matColumnDef="valorIndexado">
+    <th mat-header-cell *matHeaderCellDef> valor indexado </th>
+    <td mat-cell *matCellDef="let element"> {{element.valorIndexado}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="interes">
-    <th mat-header-cell *matHeaderCellDef> interes </th>
-    <td mat-cell *matCellDef="let element"> {{element.interes}} </td>
+  <ng-container matColumnDef="tep">
+    <th mat-header-cell *matHeaderCellDef> TEP </th>
+    <td mat-cell *matCellDef="let element"> {{element.tep}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="cuota">
-    <th mat-header-cell *matHeaderCellDef> cuota </th>
-    <td mat-cell *matCellDef="let element"> {{element.cuota}} </td>
+  <ng-container matColumnDef="cupon">
+    <th mat-header-cell *matHeaderCellDef> cupon </th>
+    <td mat-cell *matCellDef="let element"> {{element.cupon}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="inflacion">
+    <th mat-header-cell *matHeaderCellDef> inflacion </th>
+    <td mat-cell *matCellDef="let element"> {{element.inflacion}} </td>
   </ng-container>
 
   <ng-container matColumnDef="amortizacion">
@@ -29,15 +34,18 @@
     <td mat-cell *matCellDef="let element"> {{element.amortizacion}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="saldoFinal">
-    <th mat-header-cell *matHeaderCellDef> saldoFinal </th>
-    <td mat-cell *matCellDef="let element"> {{element.saldoFinal}} </td>
+  <ng-container matColumnDef="cuota">
+    <th mat-header-cell *matHeaderCellDef> cuota </th>
+    <td mat-cell *matCellDef="let element"> {{element.cuota}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="fechaEmision">
-    <th mat-header-cell *matHeaderCellDef> fechaEmision </th>
-    <td mat-cell *matCellDef="let element"> {{element.fechaEmision}} </td>
+
+
+  <ng-container matColumnDef="flujo">
+    <th mat-header-cell *matHeaderCellDef> flujo </th>
+    <td mat-cell *matCellDef="let element"> {{element.flujo}} </td>
   </ng-container>
+
 
   <ng-container matColumnDef="userId">
     <th mat-header-cell *matHeaderCellDef> User ID </th>

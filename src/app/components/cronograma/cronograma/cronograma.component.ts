@@ -21,7 +21,7 @@ export class CronogramaComponent implements OnInit {
    public dataSource: MatTableDataSource<ResultadosFinalesModel>;
 
 
-  displayedColumns: string[] = ['id', 'numero', 'saldoInicial', 'interes', 'cuota', 'amortizacion', 'saldoFinal', 'fechaEmision','userId'];
+  displayedColumns: string[] = ['id', 'valorNominal', 'valorIndexado', 'tep' , 'cupon', 'inflacion' , 'amortizacion' , 'cuota', 'flujo', 'userId'];
   @ViewChild(MatSort) sort: MatSort;
   constructor( public resultadoService: ResultadoFinalService, private storageService: StorageService) { }
   ngOnInit(): void {
@@ -51,6 +51,6 @@ export class CronogramaComponent implements OnInit {
         }));
       }
     });
-    // location.reload();
+    alert('Data has been deleted');
   }
 }

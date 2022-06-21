@@ -27,75 +27,92 @@ export class MainComponent implements OnInit {
   public resultadosFinalesModel: ResultadosFinalesModel = new ResultadosFinalesModel();
   public resultadosFinalesModel2: ResultadosFinalesModel = new ResultadosFinalesModel();
   constructor( private storageService: StorageService,
-              private dialog: MatDialog, private formBuilder: FormBuilder, public resultadoService: ResultadoFinalService) {
+               private dialog: MatDialog, private formBuilder: FormBuilder, public resultadoService: ResultadoFinalService) {
   }
 
   ngOnInit(): void {
 
     this.currentUser = this.storageService.getCurrentUser().id;
     this.BonoForm = this.formBuilder.group({
-    bono: ['', Validators.required],
+      valor_nominal: ['', Validators.required],
+      valor_comercial: ['', Validators.required],
       dias: ['', Validators.required],
       anios: ['', Validators.required],
       capitalizacion: ['', Validators.required],
-      tasa_interes: ['', Validators.required],
+      inflacion: ['', Validators.required],
+      tasa_interes_cupon: ['', Validators.required],
       fecha_emision: ['', Validators.required],
-      cok: ['', Validators.required],
+      prima: ['', Validators.required],
+      cavali: ['', Validators.required],
+      flotacion: ['', Validators.required],
+      tasa_interes_mercado: ['', Validators.required]
     });
 
   }
 
-  calcular_cronograma(moneda, tipo_tasa): void{
-    console.log('datos en el consola: ', moneda, tipo_tasa, this.cronograma_model.bono );
+  calcular_cronograma(moneda, tipo_tasa_cupon): void{
+    console.log('datos en el consola: ', moneda, tipo_tasa_cupon, this.cronograma_model.valorNominal );
     this.cronograma_model.id = 1;
-    this.cronograma_model.bono = this.BonoForm.value.bono;
+    this.cronograma_model.valorNominal = this.BonoForm.value.valor_nominal;
+    this.cronograma_model.valorComercial = this.BonoForm.value.valor_comercial;
     this.cronograma_model.moneda = moneda;
-    this.cronograma_model.dias = this.BonoForm.value.dias;
-    this.cronograma_model.anios = this.BonoForm.value.anios;
-    this.cronograma_model.tipo_tasa = tipo_tasa;
+    this.cronograma_model.frecuenciaDias = this.BonoForm.value.dias;
+    this.cronograma_model.plazo = this.BonoForm.value.anios;
+    this.cronograma_model.inflacion = this.BonoForm.value.inflacion;
+    this.cronograma_model.tipo_tasa_cupon = tipo_tasa_cupon;
+    this.cronograma_model.tasa_interes_cupon = this.BonoForm.value.tasa_interes_cupon;
+
     this.cronograma_model.capitalizacion = this.BonoForm.value.capitalizacion;
-    this.cronograma_model.tasa_interes = this.BonoForm.value.tasa_interes;
+
     this.cronograma_model.fecha_emision = this.BonoForm.value.fecha_emision;
-    this.cronograma_model.cok = this.BonoForm.value.cok;
 
     // const arrayData: Array<ResultadosFinales> = [];
     let TEP: number;
+    let TEInflacion: number;
     let counter = 1;
-    const n_cuotas = (360 /  this.cronograma_model.dias) * this.cronograma_model.anios;
-    if (this.cronograma_model.tipo_tasa === 'nominal'){
+    const n_cuotas = (360 /  this.cronograma_model.frecuenciaDias) * this.cronograma_model.plazo;
+    if (this.cronograma_model.tipo_tasa_cupon === 'nominal'){
       const m: number = (360 / this.cronograma_model.capitalizacion);
       const n: number = (360 / this.cronograma_model.capitalizacion);
-      const TNA: number = (this.cronograma_model.tasa_interes / 100);
+      const TNA: number = (this.cronograma_model.tasa_interes_cupon / 100);
       const i: number = (1 + TNA) / m;
       const TEA = Math.pow(i, n) - 1;
-      TEP = Math.pow((1 + TEA), this.cronograma_model.dias / 360) - 1;
+      TEP = Math.pow((1 + TEA), this.cronograma_model.frecuenciaDias / 360) - 1;
       console.log('La tasa efectiva en un periodo es: ', TEP);
     }
-    if (this.cronograma_model.tipo_tasa === 'efectiva'){
-      const TEA: number = this.cronograma_model.tasa_interes / 100;
+    if (this.cronograma_model.tipo_tasa_cupon === 'efectiva'){
+      const TEA: number = this.cronograma_model.tasa_interes_cupon / 100;
+      const TInflacion: number = this.cronograma_model.inflacion / 100;
       const v1: number = (1 + TEA);
-      const v2: number = this.cronograma_model.dias / 360;
+      const v2: number = this.cronograma_model.frecuenciaDias / 360;
+
+      const v1Infla: number = (1 + TInflacion);
+      const v2Infla: number = this.cronograma_model.frecuenciaDias / 360;
+
       TEP = Math.pow( v1, v2) - 1 ;
+      TEInflacion = Math.pow(v1Infla, v2Infla) - 1;
       console.log('el TEP es:  ', TEP);
       console.log('1+TEA es : ', (1 + TEA));
-      console.log('La division de frecuencia y 360 es : ', this.cronograma_model.dias / 360 );
+      console.log('La division de frecuencia y 360 es : ', this.cronograma_model.frecuenciaDias / 360 );
     }
-    let saldoInicial: number =  this.cronograma_model.bono;
-    let interes: number = TEP * saldoInicial;
-    let amortizacion: number = saldoInicial / (n_cuotas - counter + 1);
-    let cuota: number = interes + amortizacion ;
-    let saldoFinal: number = saldoInicial - amortizacion;
-
+    let valorNominal: number =  this.cronograma_model.valorNominal;
+    let valorIndexado: number = valorNominal * (1 + TEInflacion);
+    let cupon: number = (TEP * valorIndexado);
+    let amortizacion: number = valorIndexado / (n_cuotas - counter + 1);
+    let cuota: number = cupon + amortizacion ;
+    let flujo: number = cupon + amortizacion;
     this.resultadosFinalesModel2.numero = counter;
-    this.resultadosFinalesModel2.saldoInicial = saldoInicial;
-    this.resultadosFinalesModel2.interes = interes;
-    this.resultadosFinalesModel2.cuota = cuota;
-    this.resultadosFinalesModel2.amortizacion = amortizacion;
-    this.resultadosFinalesModel2.saldoFinal = saldoFinal;
-    this.resultadosFinalesModel2.fechaEmision = this.cronograma_model.fecha_emision;
+    this.resultadosFinalesModel2.valorNominal = Number(valorNominal.toFixed(3));
+    this.resultadosFinalesModel2.valorIndexado = Number(valorIndexado.toFixed(3));
+    this.resultadosFinalesModel2.tep = Number(TEP.toFixed(3)) * 100;
+    this.resultadosFinalesModel2.cupon = Number(cupon.toFixed(3));
+    this.resultadosFinalesModel2.inflacion = Number(TEInflacion.toFixed(3));
+    this.resultadosFinalesModel2.amortizacion = Number(amortizacion.toFixed(3));
+    this.resultadosFinalesModel2.cuota = Number(cuota.toFixed(3));
+    this.resultadosFinalesModel2.flujo = Number(flujo.toFixed(3));
     this.resultadosFinalesModel2.userId = this.currentUser;
 
-    if (this.resultadosFinalesModel2.saldoInicial > 0) {
+    if (this.resultadosFinalesModel2.valorNominal > 0) {
     this.resultadoService.postResultados(this.resultadosFinalesModel2).subscribe((res) => {
       console.log('La informacion en el servicio de post resultados es: ', res);
     });
@@ -103,40 +120,30 @@ export class MainComponent implements OnInit {
     for ( counter = 2; counter <= n_cuotas; counter++){
 
       if (counter >= 2) {
-        saldoInicial = saldoFinal;
-        interes = TEP * saldoInicial;
-        amortizacion = saldoInicial / (n_cuotas - counter + 1);
-        cuota = interes + amortizacion;
-        saldoFinal = saldoInicial - amortizacion;
+        valorNominal = valorIndexado - amortizacion;
+        valorIndexado = valorNominal * (1 + TEInflacion);
+        cupon = TEP * valorIndexado;
+        amortizacion = valorIndexado / (n_cuotas - counter + 1);
+        cuota = cupon + amortizacion;
+        flujo = cuota;
 
         this.resultadosFinalesModel.numero = counter;
-        this.resultadosFinalesModel.saldoInicial = saldoInicial;
-        this.resultadosFinalesModel.interes = interes;
-        this.resultadosFinalesModel.cuota = cuota;
-        this.resultadosFinalesModel.amortizacion = amortizacion;
-        this.resultadosFinalesModel.saldoFinal = saldoFinal;
+        this.resultadosFinalesModel.valorNominal = Number(valorNominal.toFixed(3));
+        this.resultadosFinalesModel.valorIndexado = Number(valorIndexado.toFixed(3));
+        this.resultadosFinalesModel.tep = Number(TEP.toFixed(3)) * 100;
+        this.resultadosFinalesModel.cupon = Number(cupon.toFixed(3));
+        this.resultadosFinalesModel.inflacion = Number(TEInflacion.toFixed(3)) * 100;
+        this.resultadosFinalesModel.amortizacion = Number(amortizacion.toFixed(3));
+        this.resultadosFinalesModel.cuota = Number(cuota.toFixed(3));
+        this.resultadosFinalesModel.flujo = Number(flujo.toFixed(3));
 
-        let fecha_inicio = this.cronograma_model.fecha_emision.valueOf();
-        let dias = (this.cronograma_model.dias * counter).valueOf();
-        const dateparts = fecha_inicio.split('-').map(d => parseInt(d));
-        if (dateparts.length !== 3 || !dateparts.every(d => !isNaN(d))){
-          console.log('La fecha no tiene un formato correcto');
-        }
-        const fechaDate = new Date(dateparts[2], dateparts[1] - 1, dateparts[0]);
-        console.log('La fecha es: ', fechaDate);
-
-        fechaDate.setDate(fechaDate.getDate() + parseInt(String(dias)));
-
-        /*
-        const formatDate = (current_datetime)=>{
-          let formatted_date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds();
-          return formatted_date;
-        };
-              let date_oficial = formatDate(fechaDate);
-*/
-        this.resultadosFinalesModel.fechaEmision = fechaDate.toString();
         this.resultadosFinalesModel.userId = this.currentUser;
-        if (this.resultadosFinalesModel.saldoInicial > 0) {
+        // tslint:disable-next-line:triple-equals
+        if (counter == n_cuotas){
+          flujo = cuota + ((this.BonoForm.value.prima / 100 ) * valorIndexado);
+          this.resultadosFinalesModel.flujo = Number(flujo.toFixed(3));
+        }
+        if (this.resultadosFinalesModel.valorNominal > 0) {
           this.resultadoService.postResultados(this.resultadosFinalesModel).subscribe((res) => {
             console.log('La informacion en el servicio de post resultados es: ', res);
           });
@@ -150,17 +157,17 @@ export class MainComponent implements OnInit {
       height: '950px',
       data: {
         id: this.cronograma_model.id,
-        bono: this.cronograma_model.bono,
+        bono: this.cronograma_model.valorNominal,
         moneda: this.cronograma_model.moneda,
-        frecuencia_dias: this.cronograma_model.dias,
-        tiempo_anios: this.cronograma_model.anios,
-        tipo_tasa: this.cronograma_model.tipo_tasa,
+        frecuencia_dias: this.cronograma_model.frecuenciaDias,
+        tiempo_anios: this.cronograma_model.plazo,
+        tipo_tasa: this.cronograma_model.tipo_tasa_cupon,
         capitalizacion: this.cronograma_model.capitalizacion,
-        tasa_interes: this.cronograma_model.tasa_interes,
-        fecha_emision:  this.cronograma_model.fecha_emision,
-        cok: this.cronograma_model.cok
+        tasa_interes: this.cronograma_model.tasa_interes_cupon,
+        fecha_emision:  this.cronograma_model.fecha_emision
       }
     });
+
   }
   ver_indicadores(): void{
 
