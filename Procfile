@@ -1,1 +1,1 @@
-web: http-server-spa dist/AdoptMeYaFrontend index.html $PORT node server.js
+web: http-server-spa dist/BCMetodoAleman index.html $PORT node server.js
