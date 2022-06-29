@@ -173,6 +173,7 @@ export class MainComponent implements OnInit {
         if (counter == n_cuotas){
           flujo = cuota + ((this.BonoForm.value.prima / 100 ) * valorIndexado);
           this.resultadosFinalesModel.flujo = Number(flujo.toFixed(3));
+          this.resultadosFinalesModel.flujoBonista = Number(flujo.toFixed(3));
           this.resultadosFinalesModel.prima = this.BonoForm.value.prima;
         }
         if (this.resultadosFinalesModel.valorNominal > 0) {
