@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AdoptMeYaFrontend": {
+    "BCMetodoAleman": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -16,7 +16,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/AdoptMeYaFrontend",
+            "outputPath": "dist/BCMetodoAleman",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -67,18 +67,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "AdoptMeYaFrontend:build"
+            "browserTarget": "BCMetodoAleman:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "AdoptMeYaFrontend:build:production"
+              "browserTarget": "BCMetodoAleman:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "AdoptMeYaFrontend:build"
+            "browserTarget": "BCMetodoAleman:build"
           }
         },
         "test": {
@@ -116,16 +116,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "AdoptMeYaFrontend:serve"
+            "devServerTarget": "BCMetodoAleman:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "AdoptMeYaFrontend:serve:production"
+              "devServerTarget": "BCMetodoAleman:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "AdoptMeYaFrontend"
+  "defaultProject": "BCMetodoAleman"
 }
