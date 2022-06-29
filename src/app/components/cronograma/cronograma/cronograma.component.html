@@ -39,13 +39,45 @@
     <td mat-cell *matCellDef="let element"> {{element.cuota}} </td>
   </ng-container>
 
-
-
   <ng-container matColumnDef="flujo">
-    <th mat-header-cell *matHeaderCellDef> flujo </th>
+    <th mat-header-cell *matHeaderCellDef> flujo emisor </th>
     <td mat-cell *matCellDef="let element"> {{element.flujo}} </td>
   </ng-container>
 
+  <ng-container matColumnDef="prima">
+    <th mat-header-cell *matHeaderCellDef> prima </th>
+    <td mat-cell *matCellDef="let element"> {{element.prima}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="escudo">
+    <th mat-header-cell *matHeaderCellDef> escudo </th>
+    <td mat-cell *matCellDef="let element"> {{element.escudo}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="flujoEmisorEscudo">
+    <th mat-header-cell *matHeaderCellDef> flujo emisor escudo </th>
+    <td mat-cell *matCellDef="let element"> {{element.flujoEmisorEscudo}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="flujoBonista">
+    <th mat-header-cell *matHeaderCellDef> flujo bonista </th>
+    <td mat-cell *matCellDef="let element"> {{element.flujoBonista}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="flujoAct">
+    <th mat-header-cell *matHeaderCellDef> flujo act. </th>
+    <td mat-cell *matCellDef="let element"> {{element.flujoAct}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="faxplazo">
+    <th mat-header-cell *matHeaderCellDef> FA x plazo </th>
+    <td mat-cell *matCellDef="let element"> {{element.faxplazo}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="factorpConvexidad">
+    <th mat-header-cell *matHeaderCellDef> factorp convexidad </th>
+    <td mat-cell *matCellDef="let element"> {{element.factorpConvexidad}} </td>
+  </ng-container>
 
   <ng-container matColumnDef="userId">
     <th mat-header-cell *matHeaderCellDef> User ID </th>
