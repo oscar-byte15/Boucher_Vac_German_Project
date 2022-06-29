@@ -9,6 +9,9 @@ export class CronogramaModel {
   public tipo_tasa_cupon: string;
   public capitalizacion: number;
   public tasa_interes_cupon: number;
+  public tasa_interes_mercado: number;
   public fecha_emision:string;
+  public impuestoRenta: number;
+  public prima: number;
   public flujo:number;
 }

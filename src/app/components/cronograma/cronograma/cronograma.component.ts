@@ -21,7 +21,7 @@ export class CronogramaComponent implements OnInit {
    public dataSource: MatTableDataSource<ResultadosFinalesModel>;
 
 
-  displayedColumns: string[] = ['id', 'valorNominal', 'valorIndexado', 'tep' , 'cupon', 'inflacion' , 'amortizacion' , 'cuota', 'flujo', 'userId'];
+  displayedColumns: string[] = ['id', 'valorNominal', 'valorIndexado', 'tep' , 'cupon', 'inflacion' , 'amortizacion' , 'cuota', 'flujo', 'prima', 'escudo', 'flujoEmisorEscudo', 'flujoBonista', 'flujoAct', 'faxplazo', 'factorpConvexidad' , 'userId'];
   @ViewChild(MatSort) sort: MatSort;
   constructor( public resultadoService: ResultadoFinalService, private storageService: StorageService) { }
   ngOnInit(): void {
