@@ -1,7 +1,7 @@
 <div class="main" style="flex-wrap: wrap; background-color: white">
   <mat-card style="flex-wrap: wrap;display:flex">
 <mat-card-content style="">
-  
+
 
 <mat-card-header style="font-family:bold,serif; font-size:20px">Ingrese los datos</mat-card-header>
 
@@ -104,9 +104,11 @@
 
     <mat-card-actions class="modal-footer" style="align-items: center;justify-content: space-between;margin-left: 25%">
       <button style="align-content: center;text-align: center;align-items: center" mat-raised-button type="button" class="btn btn-danger" (click)="calcular_cronograma(moneda.value,tipo_tasa.value)">Calcular Cronograma</button>
+
       <mat-divider></mat-divider>
+      <button style="align-content: center;text-align: center;align-items: center" mat-raised-button type="button" class="btn btn-danger" (click)="ver_indicadores()">Ver indicadores</button>
     </mat-card-actions>
-  
+
 
   </form>
 </mat-card-content>
@@ -114,6 +116,6 @@
 
 
   </mat-card>
-  
+
 
 </div>
