@@ -11,9 +11,11 @@ import {CronogramaComponent} from '../cronograma/cronograma/cronograma.component
 
 import {ResultadoFinalService} from '../../services/resultado-final.service';
 import {ResultadosFinalesModel} from '../../models/resultadosFinales';
-import {IndicadoresModel} from '../../models/indicadoresModel';
-//import {IndicadoresServices} from '../../services/indicadores-services.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import {IndicadoresModel} from '../../models/indicadores.model';
+import {IndicadoresServices} from '../../services/indicadores.service';
+import {IndicadoresComponent} from '../indicadores/indicadores/indicadores.component';
+
 
 
 @Component({
@@ -31,8 +33,8 @@ export class MainComponent implements OnInit {
   public resultadosFinalesModel2: ResultadosFinalesModel = new ResultadosFinalesModel();
   public indicadoresModel: IndicadoresModel= new IndicadoresModel();
   constructor( private storageService: StorageService,
-               private dialog: MatDialog, private formBuilder: FormBuilder, public resultadoService: ResultadoFinalService,private modal:NgbModal, /*public indicadoresService:IndicadoresServices*/) {
-  }
+               private dialog: MatDialog, private formBuilder: FormBuilder, public resultadoService: ResultadoFinalService,
+               public indicadorService: IndicadoresServices) {  }
 
   ngOnInit(): void {
 
@@ -120,18 +122,22 @@ export class MainComponent implements OnInit {
     let flujoAct: number = flujo / (Math.pow((1 + cok), counter ));
     let faxplazo: number = (flujoAct * counter * this.cronograma_model.frecuenciaDias) / 360;
     let factorpConvexidad: number = flujoAct * counter * (1 + counter);
-    let vna:  number=0;
+
+
+    let vna:number= (flujo/(Math.pow((1+cok),counter-1)));
     let utilidad: number=0;
-    let sumFaxPlazo: number = 0 ;
-    let sumFlujoact: number=0;
-    let sumFactorConvex: number=0;
-    let sumFlujoEmisor: number=0;
+    let sumFactorConvex: number = factorpConvexidad;
+    let sumFaxPlazo: number = faxplazo ;
+    let sumFlujoact: number = flujoAct;
+    let sumFlujoEmisor: number = flujo;
+
     let duracion: number=0;
     let convexidad: number=0;
     let total: number=0;
     let duracionMod: number=0;
     let tir: number=0;
     let tceaEmisor: number=0;
+
     this.resultadosFinalesModel2.numero = counter;
     this.resultadosFinalesModel2.valorNominal = Number(valorNominal.toFixed(3));
     this.resultadosFinalesModel2.valorIndexado = Number(valorIndexado.toFixed(3));
@@ -169,14 +175,14 @@ export class MainComponent implements OnInit {
         flujoAct = flujo / (Math.pow((1 + cok), counter ));
         faxplazo = (flujoAct * counter * this.cronograma_model.frecuenciaDias) / 360;
         factorpConvexidad = flujoAct * counter * (1 + counter);
-        vna=vna+flujo/Math.pow((1+cok),counter-1);
+
+        vna= vna+(flujo/(Math.pow((1+cok),counter-1)));
         sumFaxPlazo= sumFactorConvex+faxplazo;
         sumFlujoact= sumFlujoact+flujoAct;
-        sumFactorConvex= sumFactorConvex+factorpConvexidad;          
+        sumFactorConvex= sumFactorConvex+factorpConvexidad;
         sumFlujoEmisor= sumFlujoEmisor+ flujo;
 
-        
-        
+
         this.resultadosFinalesModel.numero = counter;
         this.resultadosFinalesModel.valorNominal = Number(valorNominal.toFixed(3));
         this.resultadosFinalesModel.valorIndexado = Number(valorIndexado.toFixed(3));
@@ -231,10 +237,33 @@ export class MainComponent implements OnInit {
     this.indicadoresModel.tir=Number(tir.toFixed(3));
     this.indicadoresModel.tceaEmisor=Number(tceaEmisor.toFixed(3));
 
-    //this.indicadoresService.postIndicadores(this.indicadoresModel).subscribe((res) => {
-      console.log('los datos guardados son ', this.indicadoresModel);
-   // });
-     const dialogRef = this.dialog.open(CronogramaComponent, {
+
+    utilidad=vna-valorNominal;
+    duracion=sumFaxPlazo/sumFlujoact
+    convexidad=sumFactorConvex/(Math.pow((cok+1),2)*sumFlujoact*(Math.pow((360/this.cronograma_model.frecuenciaDias),2)))
+    total= duracion + convexidad;
+    duracionMod= duracion/(1+cok);
+    let vna1=vna+(flujo/Math.pow((1+cok),counter-1));
+    let vna2=vna+(flujo/Math.pow((1+cok+0.5),counter-1));
+    tir=-((((cok*100-(cok*100+5))*vna1)/(vna1-vna2))-cok*100);
+    const v1:number = (tir/100)+1;
+    const v2:number = 360/this.cronograma_model.capitalizacion;
+    tceaEmisor = Math.pow(v1,v2) -1;
+
+    this.indicadoresModel.id = 1;
+    this.indicadoresModel.vna=Number(vna.toFixed(3));
+    this.indicadoresModel.utilidad=Number(utilidad.toFixed(3));
+    this.indicadoresModel.duracion= Number(duracion.toFixed(3));
+    this.indicadoresModel.convexidad=Number(convexidad.toFixed(3));
+    this.indicadoresModel.total=Number(total.toFixed(3));
+    this.indicadoresModel.duracionMod=Number(duracionMod.toFixed(3));
+    this.indicadoresModel.tir=Number(tir.toFixed(3));
+    this.indicadoresModel.tceaEmisor=Number(tceaEmisor.toFixed(3));
+
+    this.indicadorService.postIndicadores(this.indicadoresModel).subscribe((res) => {
+      console.log(res);
+    });
+    const dialogRef = this.dialog.open(CronogramaComponent, {
       width: '1550px',
       height: '950px',
       data: {
@@ -254,19 +283,15 @@ export class MainComponent implements OnInit {
 
     });
 
-   
-
-   
+  }
+  ver_indicadores(): void{
+    const dialogRef = this.dialog.open(IndicadoresComponent,{
+      width: '1550px',
+      height: '950px',
+    });
 
   }
-  /*ver_indicadores(contenido){
-    this.modal.open(contenido,{size:"xl"});
-    this.indicadoresService.getIndicadoresById(this.currentUser).subscribe(
-      data =>{console.log(data)}
-    )
 
-  }*/
-  ver_indicadores():void{}
   // tslint:disable-next-line:variable-name
 
   seeUserProfile(user_id: number): void{

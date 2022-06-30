@@ -33,6 +33,7 @@ import { UpdateUserDialogComponent } from './components/user-profile/update-dial
 import { UserProfilePublicationComponent } from './components/main/UserProfileByPublication/user-profile-publication/user-profile-publication.component';
 import { CronogramaComponent } from './components/cronograma/cronograma/cronograma.component';
 import {ResultadoFinalService} from './services/resultado-final.service';
+import { IndicadoresComponent } from './components/indicadores/indicadores/indicadores.component';
 
 
 
@@ -48,6 +49,7 @@ import {ResultadoFinalService} from './services/resultado-final.service';
     UpdateUserDialogComponent,
     UserProfilePublicationComponent,
     CronogramaComponent,
+    IndicadoresComponent,
 
 
   ],
