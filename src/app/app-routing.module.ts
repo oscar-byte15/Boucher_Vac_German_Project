@@ -7,6 +7,7 @@ import { AuthGuard } from './guards/AuthGuard';
 
 import {UserProfileComponent} from './components/user-profile/user-profile/user-profile.component';
 import {CronogramaComponent} from './components/cronograma/cronograma/cronograma.component';
+import {IndicadoresComponent} from './components/indicadores/indicadores/indicadores.component';
 
 
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'main', component: MainComponent},
   {path: 'user-profile', component: UserProfileComponent},
   {path: 'cronograma', component: CronogramaComponent},
+  {path: 'indicadores', component: IndicadoresComponent}
 
 ];
 

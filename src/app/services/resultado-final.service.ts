@@ -8,8 +8,8 @@ import {Publication} from '../models/publish.model';
   providedIn: 'root'
 })
 export class ResultadoFinalService {
-  private basePath = 'https://bono-vac-aleman.herokuapp.com/api/';
-  // private basePath = 'http://localhost:3000/';
+  // private basePath = 'https://bono-vac-aleman.herokuapp.com/api/';
+  private basePath = 'http://localhost:3000/';
   apiEndPoint = 'resultados/';
 
   constructor(private http: HttpClient) {}
