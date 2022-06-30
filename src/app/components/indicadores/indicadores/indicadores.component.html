@@ -1,0 +1,54 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id" style="color:black">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="vna" style="color:black">
+    <th mat-header-cell *matHeaderCellDef> vna </th>
+    <td mat-cell *matCellDef="let element"> {{element.vna}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="utilidad" style="color:black">
+    <th mat-header-cell *matHeaderCellDef> utilidad </th>
+    <td mat-cell *matCellDef="let element"> {{element.utilidad}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="duracion" style="color:black">
+    <th mat-header-cell *matHeaderCellDef> duracion</th>
+    <td mat-cell *matCellDef="let element"> {{element.duracion}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="convexidad" style="color:black">
+    <th mat-header-cell *matHeaderCellDef> convexidad </th>
+    <td mat-cell *matCellDef="let element"> {{element.convexidad}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="total" style="color:black">
+    <th mat-header-cell *matHeaderCellDef> total </th>
+    <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="duracionMod" style="color:black">
+    <th mat-header-cell *matHeaderCellDef> duracionMod </th>
+    <td mat-cell *matCellDef="let element"> {{element.duracionMod}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="tir" style="color:black">
+    <th mat-header-cell *matHeaderCellDef> tir </th>
+    <td mat-cell *matCellDef="let element"> {{element.tir}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="tceaEmisor" style="color:black">
+    <th mat-header-cell *matHeaderCellDef> tceaEmisor </th>
+    <td mat-cell *matCellDef="let element"> {{element.tceaEmisor}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+<mat-card-actions>
+  <mat-button-toggle (click)="resetear()" style="margin-left:40%; background-color: #e80a3d; color:white; font-family: 'Arial Black',serif"> Resetear</mat-button-toggle>
+</mat-card-actions>
