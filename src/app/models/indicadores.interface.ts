@@ -1,4 +1,4 @@
-export class IndicadoresModel {
+export class IndicadoresInterfaz {
 
     public id: number;
     public vna : number;
