@@ -11,9 +11,11 @@ import {CronogramaComponent} from '../cronograma/cronograma/cronograma.component
 
 import {ResultadoFinalService} from '../../services/resultado-final.service';
 import {ResultadosFinalesModel} from '../../models/resultadosFinales';
+
 import {IndicadoresModel} from '../../models/indicadores.model';
 import {IndicadoresServices} from '../../services/indicadores.service';
 import {IndicadoresComponent} from '../indicadores/indicadores/indicadores.component';
+
 
 
 @Component({
@@ -25,15 +27,14 @@ export class MainComponent implements OnInit {
   BonoForm: any;
   date: any;
   currentUser: any;
-  roomsFilter: any;
+  roomsFilter: any; 
   public cronograma_model: CronogramaModel = new CronogramaModel();
   public resultadosFinalesModel: ResultadosFinalesModel = new ResultadosFinalesModel();
   public resultadosFinalesModel2: ResultadosFinalesModel = new ResultadosFinalesModel();
   public indicadoresModel: IndicadoresModel= new IndicadoresModel();
   constructor( private storageService: StorageService,
                private dialog: MatDialog, private formBuilder: FormBuilder, public resultadoService: ResultadoFinalService,
-               public indicadorService: IndicadoresServices) {
-  }
+               public indicadorService: IndicadoresServices) {  }
 
   ngOnInit(): void {
 
@@ -108,6 +109,7 @@ export class MainComponent implements OnInit {
     const BtasaMercado: number = (1 + (this.cronograma_model.tasa_interes_mercado / 100));
     const EtasaMercado: number = this.cronograma_model.frecuenciaDias / 360;
     cok = Math.pow(BtasaMercado, EtasaMercado) - 1;
+    
 
     let valorNominal: number =  this.cronograma_model.valorNominal;
     let valorIndexado: number = valorNominal * (1 + TEInflacion);
@@ -121,21 +123,20 @@ export class MainComponent implements OnInit {
     let faxplazo: number = (flujoAct * counter * this.cronograma_model.frecuenciaDias) / 360;
     let factorpConvexidad: number = flujoAct * counter * (1 + counter);
 
+
     let vna:number= (flujo/(Math.pow((1+cok),counter-1)));
     let utilidad: number=0;
     let sumFactorConvex: number = factorpConvexidad;
     let sumFaxPlazo: number = faxplazo ;
     let sumFlujoact: number = flujoAct;
     let sumFlujoEmisor: number = flujo;
+
     let duracion: number=0;
     let convexidad: number=0;
     let total: number=0;
     let duracionMod: number=0;
     let tir: number=0;
     let tceaEmisor: number=0;
-
-
-
 
     this.resultadosFinalesModel2.numero = counter;
     this.resultadosFinalesModel2.valorNominal = Number(valorNominal.toFixed(3));
@@ -181,6 +182,7 @@ export class MainComponent implements OnInit {
         sumFactorConvex= sumFactorConvex+factorpConvexidad;
         sumFlujoEmisor= sumFlujoEmisor+ flujo;
 
+
         this.resultadosFinalesModel.numero = counter;
         this.resultadosFinalesModel.valorNominal = Number(valorNominal.toFixed(3));
         this.resultadosFinalesModel.valorIndexado = Number(valorIndexado.toFixed(3));
@@ -198,6 +200,8 @@ export class MainComponent implements OnInit {
         this.resultadosFinalesModel.faxplazo = Number(faxplazo.toFixed(3));
         this.resultadosFinalesModel.factorpConvexidad = Number(factorpConvexidad.toFixed(3));
         this.resultadosFinalesModel.userId = this.currentUser;
+        
+        
         // tslint:disable-next-line:triple-equals
         if (counter == n_cuotas){
           flujo = cuota + ((this.BonoForm.value.prima / 100 ) * valorIndexado);
@@ -212,6 +216,26 @@ export class MainComponent implements OnInit {
         }
       }
     }
+
+    utilidad=vna-valorNominal;
+    duracion=sumFaxPlazo/sumFlujoact
+    convexidad=sumFactorConvex/(Math.pow((cok+1),2)*sumFlujoact*(Math.pow((360/this.cronograma_model.frecuenciaDias),2)))
+    total= duracion + convexidad;
+    duracionMod= duracion/(1+cok);
+    var vna1=vna+flujo/Math.pow((1+cok),counter-1);
+    var vna2=vna+flujo/Math.pow((1+cok+0.5),counter-1);
+    tir=-((((cok*100-(cok*100+5))*vna1)/(vna1-vna2))-cok*100)
+    tceaEmisor=(Math.pow((tir/100+1),360/this.cronograma_model.capitalizacion)-1)
+    
+    this.indicadoresModel.id=this.currentUser;
+    this.indicadoresModel.vna=Number(vna.toFixed(3));
+    this.indicadoresModel.convexidad=Number(utilidad.toFixed(3));
+    this.indicadoresModel.duracion= Number(duracion.toFixed(3));
+    this.indicadoresModel.convexidad=Number(convexidad.toFixed(3));
+    this.indicadoresModel.total=Number(total.toFixed(3));
+    this.indicadoresModel.duracionMod=Number(duracionMod.toFixed(3));
+    this.indicadoresModel.tir=Number(tir.toFixed(3));
+    this.indicadoresModel.tceaEmisor=Number(tceaEmisor.toFixed(3));
 
 
     utilidad=vna-valorNominal;
@@ -251,16 +275,23 @@ export class MainComponent implements OnInit {
         tipo_tasa: this.cronograma_model.tipo_tasa_cupon,
         capitalizacion: this.cronograma_model.capitalizacion,
         tasa_interes: this.cronograma_model.tasa_interes_cupon,
-        fecha_emision:  this.cronograma_model.fecha_emision
+        fecha_emision:  this.cronograma_model.fecha_emision,
+      
+        
       }
+
+
     });
+
   }
   ver_indicadores(): void{
     const dialogRef = this.dialog.open(IndicadoresComponent,{
       width: '1550px',
       height: '950px',
     });
+
   }
+
   // tslint:disable-next-line:variable-name
 
   seeUserProfile(user_id: number): void{
