@@ -1,8 +1,9 @@
 # Boucher Vac German Project with Angular for Front End 🚀
 
-En este proyecto se ha usado Angular y Angular Material para crear componentes visuales con cards, tables y botones.
-También, he usado HTML, CSS y Typescript para el funcionamiento.
-Ahora, describiendo de que trata este proyecto, es sobre crear un sistema para calcular bonos de financiamiento con el método alemán.
+In this project Angular and Angular Material have been used to create visual components with cards, tables and buttons.
+Also, I have used HTML, CSS and Typescript for the performance.
+Now, describing what this project is about, it is about creating a system to calculate financing bonds with the German method for the Finance course.
+Finally, for the backend, the json server deployed on Heroku has been used.
   
 Thank you,
 
